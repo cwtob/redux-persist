@@ -51,6 +51,7 @@ export default function createPersistoid(config: PersistConfig): Persistoid {
   }
 
   function processNextKey() {
+    console.log("%credux-persist/createPersistoid/processNextKey start", "color: #5cc3ad")
     if (keysToProcess.length === 0) {
       if (timeIterator) clearInterval(timeIterator)
       timeIterator = null
@@ -79,6 +80,7 @@ export default function createPersistoid(config: PersistConfig): Persistoid {
     if (keysToProcess.length === 0) {
       writeStagedState()
     }
+    console.log("%credux-persist/createPersistoid/processNextKey end", "color: #5cc3ad")
   }
 
   function writeStagedState() {
