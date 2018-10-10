@@ -184,14 +184,15 @@ function createPersistoid(config) {
   };
 
   function processNextKey() {
-    console.log("%credux-persist/createPersistoid/processNextKey start", "color: #5cc3ad");
     if (keysToProcess.length === 0) {
       if (timeIterator) clearInterval(timeIterator);
       timeIterator = null;
+      console.log("%credux-persist/createPersistoid/processNextKey - no more keys", "color: #5cc3ad");
       return;
     }
 
     var key = keysToProcess.shift();
+    console.log("%credux-persist/createPersistoid/processNextKey start - " + key, "color: #5cc3ad");
     var endState = transforms.reduce(function (subState, transformer) {
       return transformer.in(subState, key, lastState);
     }, lastState[key]);
@@ -210,7 +211,7 @@ function createPersistoid(config) {
     if (keysToProcess.length === 0) {
       writeStagedState();
     }
-    console.log("%credux-persist/createPersistoid/processNextKey end", "color: #5cc3ad");
+    console.log("%credux-persist/createPersistoid/processNextKey end - " + key, "color: #5cc3ad");
   }
 
   function writeStagedState() {
