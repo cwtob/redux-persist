@@ -187,19 +187,20 @@ function createPersistoid(config) {
     if (keysToProcess.length === 0) {
       if (timeIterator) clearInterval(timeIterator);
       timeIterator = null;
-      console.log("%credux-persist/createPersistoid/processNextKey - no more keys", "color: #5cc3ad");
+      console.log('%credux-persist/createPersistoid/processNextKey - no more keys', 'color: #5cc3ad');
       return;
     }
 
     var key = keysToProcess.shift();
-    console.log("%credux-persist/createPersistoid/processNextKey start - " + key, "color: #5cc3ad");
+    console.log('%credux-persist/createPersistoid/processNextKey start - ' + key, 'color: #5cc3ad');
     var endState = transforms.reduce(function (subState, transformer) {
       return transformer.in(subState, key, lastState);
     }, lastState[key]);
-
+    console.log('%credux-persist/createPersistoid/processNextKey transforms.reduced', 'color: #aaaaaa');
     if (endState !== undefined) {
       try {
         stagedState[key] = serialize(endState);
+        console.log('%credux-persist/createPersistoid/processNextKey serialized', 'color: #aaaaaa');
       } catch (err) {
         console.error('redux-persist/createPersistoid: error serializing state', err);
       }
@@ -211,7 +212,7 @@ function createPersistoid(config) {
     if (keysToProcess.length === 0) {
       writeStagedState();
     }
-    console.log("%credux-persist/createPersistoid/processNextKey end - " + key, "color: #5cc3ad");
+    console.log('%credux-persist/createPersistoid/processNextKey end - ' + key, 'color: #5cc3ad');
   }
 
   function writeStagedState() {
@@ -221,6 +222,7 @@ function createPersistoid(config) {
         delete stagedState[key];
       }
     });
+    console.log('%credux-persist/createPersistoid/processNextKey keys deleted', 'color: #aaaaaa');
 
     writePromise = storage.setItem(storageKey, serialize(stagedState)).catch(onWriteFail);
   }

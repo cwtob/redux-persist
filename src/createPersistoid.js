@@ -69,10 +69,17 @@ export default function createPersistoid(config: PersistConfig): Persistoid {
     let endState = transforms.reduce((subState, transformer) => {
       return transformer.in(subState, key, lastState)
     }, lastState[key])
-
+    console.log(
+      '%credux-persist/createPersistoid/processNextKey transforms.reduced',
+      'color: #aaaaaa'
+    )
     if (endState !== undefined) {
       try {
         stagedState[key] = serialize(endState)
+        console.log(
+          '%credux-persist/createPersistoid/processNextKey serialized',
+          'color: #aaaaaa'
+        )
       } catch (err) {
         console.error(
           'redux-persist/createPersistoid: error serializing state',
@@ -100,6 +107,10 @@ export default function createPersistoid(config: PersistConfig): Persistoid {
         delete stagedState[key]
       }
     })
+    console.log(
+      '%credux-persist/createPersistoid/processNextKey keys deleted',
+      'color: #aaaaaa'
+    )
 
     writePromise = storage
       .setItem(storageKey, serialize(stagedState))
