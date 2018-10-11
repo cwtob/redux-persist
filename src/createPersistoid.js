@@ -4,7 +4,8 @@ import { KEY_PREFIX, REHYDRATE } from './constants'
 
 import type { Persistoid, PersistConfig, Transform } from './types'
 
-import { throttle } from 'lodash'
+// import { throttle as _throttle } from 'lodash-es/function/throttle'
+const _ = require('lodash')
 
 type IntervalID = any // @TODO remove once flow < 0.63 support is no longer required.
 
@@ -52,7 +53,7 @@ export default function createPersistoid(config: PersistConfig): Persistoid {
 
     lastState = state
   }
-  const update = throttle(_update, 3000, { leading: false, trailing: true })
+  const update = _.throttle(_update, 3000, { leading: false, trailing: true })
 
   function processNextKey() {
     if (keysToProcess.length === 0) {
