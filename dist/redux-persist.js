@@ -140,6 +140,8 @@ function autoMergeLevel1(inboundState, originalState, reducedState, _ref) {
 // import { throttle as _throttle } from 'lodash-es/function/throttle'
 var _ = require('lodash');
 
+var THROTTLE_WAIT_DURATION = 6000;
+
 // @TODO remove once flow < 0.63 support is no longer required.
 
 function createPersistoid(config) {
@@ -186,7 +188,7 @@ function createPersistoid(config) {
 
     lastState = state;
   };
-  var update = _.throttle(_update, 3000, { leading: false, trailing: true });
+  var update = _.throttle(_update, THROTTLE_WAIT_DURATION, { leading: false, trailing: true });
 
   function processNextKey() {
     if (keysToProcess.length === 0) {
