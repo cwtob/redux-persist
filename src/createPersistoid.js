@@ -7,7 +7,7 @@ import type { Persistoid, PersistConfig, Transform } from './types'
 // import { throttle as _throttle } from 'lodash-es/function/throttle'
 const _ = require('lodash')
 
-const THROTTLE_WAIT_DURATION = 6000
+const THROTTLE_WAIT_DURATION = 1000
 
 type IntervalID = any // @TODO remove once flow < 0.63 support is no longer required.
 
